@@ -8,11 +8,13 @@ import ProfilePage from "./components/ProfilePage"; // Example component
 
 
 const App = () => {
-  const user = {
-    name: 'John Doe',
-    about: 'A software developer with a passion for clean code.',
-    profileImage: 'https://res.cloudinary.com/dgvyblmwc/image/upload/v1563801291/qw6bkissy0s86tpxaskl.jpg'
-  };
+  // const user = {
+  //   id: 'HSdinfNBCSm2UnGrSTL7',
+  //   name: 'John Doe',
+  //   about: 'A software developer with a passion for clean code.',
+  //   profileImage: 'https://res.cloudinary.com/dgvyblmwc/image/upload/v1563801291/qw6bkissy0s86tpxaskl.jpg'
+  // };
+  const userId = 'c6Ihs3GexEFvOmIhp0no';
 
  
   return (
@@ -21,7 +23,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/profile" element={<ProfilePage user={user} />} />
+          <Route path="/profile" element={<ProfilePage userId={userId} />} />
         </Routes>
       </Router>
     </ThemeProvider>
