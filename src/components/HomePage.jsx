@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Card, CardMedia, CardContent, Typography } from "@mui/material";
 import axios from "axios";
+import NavBar from "./NavBar"; // Import the NavBar component
+import { getCurrentUser } from "./firebase";
 
-const HomePage = () => {
+const HomePage = ({ user }) => {
   const [kudos, setKudos] = useState([]);
+  // const [user, setUser] = useState(null);
 
   useEffect(() => {
+    // getCurrentUser((currentUser) => {
+    //   if (currentUser) {
+    //     setUser(currentUser);
+    //     console.log("Logged in user ID:", currentUser.uid);
+    //   } else {
+    //     console.log("No user is logged in");
+    //   }
+    // });
+
     const fetchKudos = async () => {
       try {
         const response = await axios.get("/kudos");
@@ -63,6 +75,8 @@ const HomePage = () => {
   }, []);
 
   return (
+    <div>
+    <NavBar user={user} /> 
     <Grid container spacing={2} style={{ padding: "16px" }}>
       {kudos.map((kudo) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={kudo.id}>
@@ -76,6 +90,7 @@ const HomePage = () => {
         </Grid>
       ))}
     </Grid>
+    </div>
   );
 };
 

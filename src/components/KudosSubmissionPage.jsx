@@ -4,6 +4,7 @@ import axios from "axios";
 // add a dropdown with values for the giverId
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { useEffect } from "react";
+import NavBar from "./NavBar";
 
 const KudosSubmissionPage = ({ onSubmit }) => {
   const [text, setText] = useState("");
@@ -71,6 +72,8 @@ useEffect(() => {
 
 
   return (
+<div>
+    <NavBar />
     <Box
       component="form"
       onSubmit={handleSubmit}
@@ -122,6 +125,7 @@ useEffect(() => {
         Submit
       </Button>
     </Box>
+    </div>
   );
 };
 
