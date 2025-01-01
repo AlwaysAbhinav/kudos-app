@@ -67,10 +67,10 @@ const HomePage = () => {
       {kudos.map((kudo) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={kudo.id}>
           <Card>
-            <CardMedia component="img" image={kudo.imageUrl} alt={kudo.text} />
+            <CardMedia component="img" image={kudo.receiver.profileImage} alt={kudo.text} />
             <CardContent>
               <Typography variant="body1">{kudo.text}</Typography>
-              <Typography variant="body2">From: {kudo.sender}</Typography>
+              <Typography variant="body2">From: {kudo.giver.name}</Typography>
             </CardContent>
           </Card>
         </Grid>
