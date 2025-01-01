@@ -6,7 +6,7 @@ import NavBar from "./NavBar";
 const ProfilePage = ({ userId }) => {
   const [user, setUser] = useState(null);
   const [kudos, setKudos] = useState([]);
-console.log("UserId:", userId);
+// console.log("UserId:", userId);
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -25,7 +25,7 @@ console.log("UserId:", userId);
   if (!user) {
     return <div>Loading...</div>;
   }
-  console.log("User Below:", user);
+  // console.log("User Below:", user);
 
   return (
   <div>
