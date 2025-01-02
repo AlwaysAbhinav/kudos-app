@@ -1,6 +1,6 @@
 // filepath: /C:/Users/User/Projects/kudos-app/src/firebase.js
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -40,6 +40,33 @@ const signInWithGoogle = () => {
     });
 };
 
+const signInWithEmail = (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+
+const signUpWithEmail = (email, password) => {
+  return createUserWithEmailAndPassword(auth, email, password)
+    .then(async (result) => {
+      const user = result.user;
+      console.log("User Info:", user);
+
+      // Store user data in Firestore
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(userRef, {
+        uid: user.uid,
+        name: user.email,
+        email: user.email,
+        profileImage: "https://example.com/default-profile.png", // Add a default profile image URL here
+      });
+
+      // Redirect or perform any other actions after successful sign-up
+      window.location.href = "/";
+  })
+  .catch((error) => {
+    console.error("Error during sign-up:", error);
+  });
+};
+
 const signOutUser = () => {
     signOut(auth)
       .then(() => {
@@ -61,4 +88,4 @@ const getCurrentUser = (callback) => {
     });
   };
 
-export { auth, signInWithGoogle, signOutUser, getCurrentUser };
+export { auth, signInWithGoogle, signInWithEmail, signUpWithEmail, signOutUser, getCurrentUser };

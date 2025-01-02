@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Card, CardMedia, CardContent, Typography } from "@mui/material";
+import { Grid, Card, CardMedia, CardContent, Typography, Avatar } from "@mui/material";
 import axios from "axios";
 import NavBar from "./NavBar"; // Import the NavBar component
 import { getCurrentUser } from "./firebase";
 
 const HomePage = ({ user }) => {
-  const [kudos, setKudos] = useState([]);
+  const [kudosData, setKudosData] = useState([]);
   // const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const HomePage = ({ user }) => {
     const fetchKudos = async () => {
       try {
         const response = await axios.get("/kudos");
-        setKudos(response.data);
+        setKudosData(response.data);
       } catch (error) {
         console.error("Error fetching kudos:", error);
       }
@@ -77,14 +77,36 @@ const HomePage = ({ user }) => {
   return (
     <div>
     <NavBar user={user} /> 
-    <Grid container spacing={2} style={{ padding: "16px" }}>
-      {kudos.map((kudo) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={kudo.id}>
+    <Grid container spacing={3}>
+      {kudosData.map((userData) => (
+        <Grid item xs={12} md={6} lg={4} key={userData.receiverId}>
           <Card>
-            <CardMedia component="img" image={kudo.receiver.profileImage} alt={kudo.text} />
             <CardContent>
-              <Typography variant="body1">{kudo.text}</Typography>
-              <Typography variant="body2">From: {kudo.giver.name}</Typography>
+              <Grid container spacing={2} alignItems="center">
+                <Grid item>
+                  <Avatar
+                    src={userData.receiverImage}
+                    alt={userData.receiverName}
+                    sx={{ width: 56, height: 56 }}
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography variant="h6" component="div">
+                    {userData.receiverName}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                     {userData.receiverBio}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Typography variant="body2" color="textSecondary" sx={{ marginTop: 2 }}>
+                Kudos:
+              </Typography>
+              <ul>
+                {userData.kudos.map((kudo, index) => (
+                  <li key={index}>{kudo.text}</li> // Adjust for kudo structure
+                ))}
+              </ul>
             </CardContent>
           </Card>
         </Grid>

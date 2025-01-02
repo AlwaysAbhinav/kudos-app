@@ -30,7 +30,7 @@ return (
             {user && (
                 <>
                     <Typography variant="body1" style={{ marginRight: "16px" }}>
-                        Welcome, {user.displayName}
+                        Welcome, {user.name}
                     </Typography>
                     <Button color="inherit" onClick={signOutUser}>Logout</Button>
                 </>

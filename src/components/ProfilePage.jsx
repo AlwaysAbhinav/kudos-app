@@ -11,7 +11,7 @@ const ProfilePage = ({ userId }) => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(`/profile?userId=${userId}`);
-        console.log("Response:", response);
+        // console.log("Response:", response);
         setUser(response.data.user);
         setKudos(response.data.kudos);
       } catch (error) {
@@ -29,7 +29,7 @@ const ProfilePage = ({ userId }) => {
 
   return (
   <div>
-    <NavBar />     
+    <NavBar />
     <div style={{ padding: "16px", backgroundColor: "#ffffff" }}>
       {/* User Info */}
       <div style={{ display: "flex", alignItems: "center", marginBottom: "16px" }}>

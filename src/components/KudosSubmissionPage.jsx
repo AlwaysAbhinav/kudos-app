@@ -6,13 +6,13 @@ import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { useEffect } from "react";
 import NavBar from "./NavBar";
 
-const KudosSubmissionPage = ({ onSubmit }) => {
+const KudosSubmissionPage = ({ onSubmit, userId }) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState(null);
   const [sender, setSender] = useState("Sam Altman");
   const [receiverId, setReceiverId] = useState("");
-  const [giverId, setGiverId] = useState("eesRyEusXcavox6J7mmC");
-  const [loggedInUserId, setLoggedInUserId] = useState("eesRyEusXcavox6J7mmC");// TODO: Change this to logged in user later. Currently Ravi Patel hardcoded
+  const [giverId, setGiverId] = useState(userId);
+  const [loggedInUserId, setLoggedInUserId] = useState(userId);// TODO: Change this to logged in user later. Currently Ravi Patel hardcoded
   const [users, setUsers] = useState([]);
 
   const handleImageUpload = (event) => {

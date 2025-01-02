@@ -13,11 +13,13 @@ import { getCurrentUser } from "./components/firebase";
 const App = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     getCurrentUser((currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        setUserId(currentUser.uid);
         console.log("Logged in user ID:", currentUser.uid);
       } else {
         console.log("No user is logged in");
@@ -36,9 +38,9 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage user={user} />} />
-          {/* <Route path="/login" element={<Login />} /> */}
-          <Route path="/profile" element={<ProfilePage userId={user.uid} />} />
-          <Route path="/create" element={<KudosSubmissionPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<ProfilePage userId={userId} />} />
+          <Route path="/create" element={<KudosSubmissionPage userId={userId} />} />
         </Routes>
       </Router>
     </ThemeProvider>
