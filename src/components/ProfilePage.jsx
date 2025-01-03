@@ -1,62 +1,38 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Avatar, Typography, Grid, Box, CardMedia, Card, CardContent } from "@mui/material";
+import NavBar from "./NavBar";
 
-const ProfilePage = ({ user }) => {
+const ProfilePage = ({ userId }) => {
+  const [user, setUser] = useState(null);
   const [kudos, setKudos] = useState([]);
-
+// console.log("UserId:", userId);
   useEffect(() => {
-    // Simulate fetching data from an API
-    const fetchKudos = async () => {
-      const data = [
-        {
-          id: 1,
-          imageUrl: "https://res.cloudinary.com/dgvyblmwc/image/upload/v1710241645/student-2_kbdou4.jpg",
-          text: "Thank you for always supporting me!",
-          sender: "John Doe",
-        },
-        {
-          id: 2,
-          imageUrl: "https://res.cloudinary.com/dgvyblmwc/image/upload/v1710241644/student-3_jrchy8.jpg",
-          text: "Your guidance made all the difference!",
-          sender: "Jane Smith",
-        },
-        {
-          id: 3,
-          imageUrl: "https://res.cloudinary.com/dgvyblmwc/image/upload/v1563537382/mr2zzvwqwzjuqh9qoxfs.png",
-          text: "Your guidance made all the difference!",
-          sender: "Jane Smith",
-        },
-        {
-          id: 4,
-          imageUrl: "https://res.cloudinary.com/dgvyblmwc/image/upload/v1710241644/student-1_pn14dl.jpg",
-          text: "Your are the best!",
-          sender: "Ravi Patel",
-        },
-        {
-          id: 5,
-          imageUrl: "https://res.cloudinary.com/dgvyblmwc/image/upload/v1710241644/student-4_yvwgot.jpg",
-          text: "You go boy, you go!",
-          sender: "Kiran Kumar",
-        },
-        {
-          id: 6,
-          imageUrl: "https://res.cloudinary.com/dgvyblmwc/image/upload/v1563801291/qw6bkissy0s86tpxaskl.jpg",
-          text: "The world is not enough!",
-          sender: "Sam Altman",
-        },
-      ];
-      setKudos(data);
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get(`/profile?userId=${userId}`);
+        // console.log("Response:", response);
+        setUser(response.data.user);
+        setKudos(response.data.kudos);
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      }
     };
 
-    fetchKudos();
-  }, []);
+    fetchProfileData();
+  }, [userId]);
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+  // console.log("User Below:", user);
 
   return (
+  <div>
+    <NavBar />
     <div style={{ padding: "16px", backgroundColor: "#ffffff" }}>
       {/* User Info */}
-      <div
-        style={{ display: "flex", alignItems: "center", marginBottom: "16px" }}
-      >
+      <div style={{ display: "flex", alignItems: "center", marginBottom: "16px" }}>
         <Avatar
           alt={user.name}
           src={user.profileImage}
@@ -65,52 +41,45 @@ const ProfilePage = ({ user }) => {
             height: 120,
             border: "2px solid #e60023",
             marginRight: "16px",
+            borderRadius: 0, // Set borderRadius to 0 to make it a square
           }}
         />
         <div>
-          <Typography
-            variant="h4"
-            style={{ fontWeight: "bold", color: "#333333" }}
-          >
+          <Typography variant="h4" style={{ fontWeight: "bold", color: "#333333" }}>
             {user.name}
           </Typography>
-          <Typography
-            variant="body1"
-            color="textSecondary"
-            style={{ color: "#717171" }}
-          >
+          <Typography variant="body1" color="textSecondary" style={{ color: "#717171" }}>
             {user.bio}
           </Typography>
         </div>
       </div>
-
-      {/* Kudos Timeline */}
+      {/* Kudos List */}
       <Grid container spacing={2}>
-        {kudos.map((kudo, index) => (
+        {kudos.map((kudo) => (
           <Grid item xs={12} sm={6} md={4} key={kudo.id}>
-              <Card>
+            <Card>
+            <CardContent>
+                <Typography variant="body1" style={{ color: "#333333" }}>
+                  {kudo.text}
+                </Typography>
+              </CardContent>              
               <Box display="flex" alignItems="center">
                 <CardMedia
                   component="img"
-                  image={kudo.imageUrl}
-                  alt={kudo.text}
-                  sx={{ width: 80, height: 80, borderRadius: '50%', marginRight: 2 }}
+                  image={kudo.giver.image}
+                  alt={kudo.giver.name}
+                  sx={{ width: 40, height: 40, borderRadius: '50%', marginLeft: 2 }}
                 />
-                <Typography variant="body2" sx={{ color: "#717171", fontWeight: 'bold', marginRight: 'auto' }}>
-                  From: {kudo.sender}
+                <Typography variant="body2" sx={{ color: "#717171",  marginRight: 'auto' }}>
+                  {kudo.giver.name}
                 </Typography>
-              </Box>            
-                <CardContent>
-                  <Typography variant="body1" style={{ color: "#333333" }}>
-                    <label key={index}>{kudo.text}</label>
-                  </Typography>
-
-                </CardContent>
-              </Card>
+              </Box>
+            </Card>
           </Grid>
         ))}
       </Grid>
     </div>
+  </div>
   );
 };
 
