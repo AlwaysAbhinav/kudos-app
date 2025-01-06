@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import KudosSubmissionPage from "./components/KudosSubmissionPage";
 import { useState, useEffect } from "react";
 import { getCurrentUser } from "./components/firebase";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -39,8 +40,25 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage user={user} />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<ProfilePage userId={userId} />} />
-          <Route path="/create" element={<KudosSubmissionPage userId={userId} />} />
+                 {/* Protected Routes */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/create"
+          element={
+            <ProtectedRoute>
+              <KudosSubmissionPage />
+            </ProtectedRoute>
+          }
+        />
+          {/* <Route path="/profile" element={<ProfilePage userId={userId} />} />
+          <Route path="/create" element={<KudosSubmissionPage userId={userId} />} /> */}
         </Routes>
       </Router>
     </ThemeProvider>

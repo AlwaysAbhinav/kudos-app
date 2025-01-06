@@ -1,9 +1,14 @@
 // filepath: /C:/Users/User/Projects/kudos-app/src/components/Login.jsx
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button, Box, Typography, TextField } from "@mui/material";
 import { signInWithGoogle, signInWithEmail, signUpWithEmail } from "./firebase";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/'; // Default to home page
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
@@ -23,7 +28,8 @@ const Login = () => {
       } else {
         await signInWithEmail(email, password);
       }
-      window.location.href = "/";
+      // window.location.href = "/";
+      navigate(from); // Redirect to the original page after login
     } catch (error) {
       console.error("Error during email login:", error);
     }

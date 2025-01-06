@@ -2,17 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Avatar, Typography, Grid, Box, CardMedia, Card, CardContent } from "@mui/material";
 import NavBar from "./NavBar";
+import { useAuth } from "./AuthContext";
 
-const ProfilePage = ({ userId }) => {
-  const [user, setUser] = useState(null);
+const ProfilePage = () => {
+  const [profileData, setProfileData] = useState(null);
+  const { user } = useAuth();
   const [kudos, setKudos] = useState([]);
 // console.log("UserId:", userId);
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(`/profile?userId=${userId}`);
+        console.log("User Object:", user);
+        console.log("User ID:", user.uid);
+        const response = await axios.get(`/profile?userId=${user.uid}`);
         // console.log("Response:", response);
-        setUser(response.data.user);
+        setProfileData(response.data.user);
         setKudos(response.data.kudos);
       } catch (error) {
         console.error("Error fetching profile data:", error);
@@ -20,11 +24,11 @@ const ProfilePage = ({ userId }) => {
     };
 
     fetchProfileData();
-  }, [userId]);
+  }, [user]);
 
-  if (!user) {
-    return <div>Loading...</div>;
-  }
+  if (!user) return <div>Loading...</div>;
+  if (!profileData) return <div>Loading profile...</div>;
+
   // console.log("User Below:", user);
 
   return (
@@ -34,8 +38,8 @@ const ProfilePage = ({ userId }) => {
       {/* User Info */}
       <div style={{ display: "flex", alignItems: "center", marginBottom: "16px" }}>
         <Avatar
-          alt={user.name}
-          src={user.profileImage}
+          alt={profileData.name}
+          src={profileData.profileImage}
           style={{
             width: 120,
             height: 120,
@@ -46,10 +50,10 @@ const ProfilePage = ({ userId }) => {
         />
         <div>
           <Typography variant="h4" style={{ fontWeight: "bold", color: "#333333" }}>
-            {user.name}
+            {profileData.name}
           </Typography>
           <Typography variant="body1" color="textSecondary" style={{ color: "#717171" }}>
-            {user.bio}
+            {profileData.bio}
           </Typography>
         </div>
       </div>

@@ -76,42 +76,38 @@ const HomePage = ({ user }) => {
 
   return (
     <div>
-    <NavBar user={user} /> 
-    <Grid container spacing={3}>
-      {kudosData.map((userData) => (
-        <Grid item xs={12} md={6} lg={4} key={userData.receiverId}>
-          <Card>
-            <CardContent>
-              <Grid container spacing={2} alignItems="center">
-                <Grid item>
-                  <Avatar
-                    src={userData.receiverImage}
-                    alt={userData.receiverName}
-                    sx={{ width: 56, height: 56 }}
-                  />
-                </Grid>
-                <Grid item>
-                  <Typography variant="h6" component="div">
-                    {userData.receiverName}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                     {userData.receiverBio}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Typography variant="body2" color="textSecondary" sx={{ marginTop: 2 }}>
-                Kudos:
-              </Typography>
-              <ul>
-                {userData.kudos.map((kudo, index) => (
-                  <li key={index}>{kudo.text}</li> // Adjust for kudo structure
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+      <NavBar user={user} />
+      <Grid container spacing={3} justifyContent="center">
+        {kudosData.map((userData) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={userData.receiverId}>
+            <Card sx={{ borderRadius: 2, boxShadow: 3, overflow: "hidden" }}>
+              <CardMedia
+                component="img"
+                height="200"
+                // image={userData.receiverImage || "https://example.com/default-profile.png"}
+                image={userData.receiverImage || "https://en.wikipedia.org/wiki/Homer_Simpson#/media/File:Homer_Simpson_2006.png"}
+                alt={userData.receiverName}
+              />
+              <CardContent>
+                <Typography variant="h6" component="div">
+                  {userData.receiverName}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {userData.receiverBio}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" sx={{ marginTop: 2 }}>
+                  Kudos:
+                </Typography>
+                <ul>
+                  {userData.kudos.map((kudo, index) => (
+                    <li key={index}>{kudo.text}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };
