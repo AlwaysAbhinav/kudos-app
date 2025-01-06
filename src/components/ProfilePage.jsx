@@ -77,6 +77,13 @@ const ProfilePage = () => {
                 <Typography variant="body2" sx={{ color: "#717171",  marginRight: 'auto' }}>
                   {kudo.giver.name}
                 </Typography>
+                <Typography variant="body2" sx={{ color: "#717171",  marginLeft: 'auto' }}>
+                  {new Date(kudo.createdDate).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                  }).replace(/ /g, '-')}
+                </Typography>
               </Box>
             </Card>
           </Grid>

@@ -84,7 +84,6 @@ const HomePage = ({ user }) => {
               <CardMedia
                 component="img"
                 height="200"
-                // image={userData.receiverImage || "https://example.com/default-profile.png"}
                 image={userData.receiverImage || "https://en.wikipedia.org/wiki/Homer_Simpson#/media/File:Homer_Simpson_2006.png"}
                 alt={userData.receiverName}
               />
