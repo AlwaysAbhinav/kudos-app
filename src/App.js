@@ -10,6 +10,7 @@ import KudosSubmissionPage from "./components/KudosSubmissionPage";
 import { useState, useEffect } from "react";
 import { getCurrentUser } from "./components/firebase";
 import ProtectedRoute from "./components/ProtectedRoute";
+import DetailsPage from "./components/DetailsPage";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -40,7 +41,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage user={user} />} />
           <Route path="/login" element={<Login />} />
-                 {/* Protected Routes */}
+          <Route path="/details/:userId" element={<DetailsPage />} />
+        {/* Protected Routes */}
         <Route
           path="/profile"
           element={
