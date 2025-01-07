@@ -89,6 +89,8 @@ const ProfilePage = () => {
             Kudos Received
           </Typography>
           <Grid container spacing={2}>
+          {kudos && (
+              <>
             {kudos.map((kudo) => (
               <Grid item xs={12} sm={6} md={4} key={kudo.id}>
                 <Card>
@@ -99,7 +101,7 @@ const ProfilePage = () => {
                   </CardContent>
                   <Box display="flex" alignItems="center">
                     <Avatar
-                      alt={kudo.giver.name}
+                      // alt={kudo.giver.name}
                       src={kudo.giver.image}
                       sx={{ width: 40, height: 40, marginLeft: 2 }}
                     />
@@ -117,6 +119,8 @@ const ProfilePage = () => {
                 </Card>
               </Grid>
             ))}
+            </>
+          )}
           </Grid>
         </div>
         {/* Kudos Given Section */}
@@ -125,34 +129,39 @@ const ProfilePage = () => {
             Kudos Given
           </Typography>
           <Grid container spacing={2}>
-            {kudosGiven.map((kudo) => (
-              <Grid item xs={12} sm={6} md={4} key={kudo.id}>
-                <Card>
-                  <Box display="flex" alignItems="center">
-                    <Avatar
-                      alt={kudo.receiver.name}
-                      src={kudo.receiver.image}
-                      sx={{ width: 40, height: 40, marginLeft: 2 }}
-                    />
-                    <Typography variant="body2" sx={{ color: "#717171", marginRight: 'auto' }}>
-                      {kudo.receiver.name}
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: "#717171", marginLeft: 'auto' }}>
-                      {new Date(kudo.createdDate).toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                      }).replace(/ /g, '-')}
-                    </Typography>
-                  </Box>
-                  <CardContent>
-                    <Typography variant="body1" style={{ color: "#333333" }}>
-                      {kudo.text}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
+            {/* Put a condition to show the below section if kudosGiven is not null */}
+            {kudosGiven && (
+              <>
+              {kudosGiven.map((kudo) => (
+                <Grid item xs={12} sm={6} md={4} key={kudo.id}>
+                  <Card>
+                    <Box display="flex" alignItems="center">
+                      <Avatar
+                        alt={kudo.receiver.name}
+                        src={kudo.receiver.image}
+                        sx={{ width: 40, height: 40, marginLeft: 2 }}
+                      />
+                      <Typography variant="body2" sx={{ color: "#717171", marginRight: 'auto' }}>
+                        {kudo.receiver.name}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: "#717171", marginLeft: 'auto' }}>
+                        {new Date(kudo.createdDate).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: 'short',
+                          year: 'numeric'
+                        }).replace(/ /g, '-')}
+                      </Typography>
+                    </Box>
+                    <CardContent>
+                      <Typography variant="body1" style={{ color: "#333333" }}>
+                        {kudo.text}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </>
+          )}
           </Grid>
         </div>        
       </div>
