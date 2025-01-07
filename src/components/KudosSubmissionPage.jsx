@@ -6,6 +6,7 @@ import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { useEffect } from "react";
 import NavBar from "./NavBar";
 import { useAuth } from "./AuthContext";
+import TagCloud from "./TagCloud";
 
 const KudosSubmissionPage = () => {
   const { user } = useAuth();
@@ -18,7 +19,16 @@ const KudosSubmissionPage = () => {
   const [usersList, setUsersList] = useState([]);
   const [query, setQuery] = useState(""); // Search query
   const [suggestions, setSuggestions] = useState([]); // Suggestions array
+  const [selectedTags, setSelectedTags] = useState([]);
   
+    const toggleTag = (tag) => {
+      if (selectedTags.includes(tag)) {
+        setSelectedTags(selectedTags.filter((t) => t !== tag)); // Remove tag
+      } else {
+        setSelectedTags([...selectedTags, tag]); // Add tag
+      }
+    };
+
 
   const handleSearch = async (e) => {
     const value = e.target.value;
@@ -47,14 +57,17 @@ const KudosSubmissionPage = () => {
     const formData = new FormData();
     formData.append("text", text);
     if (image) {
-      console.log("Image:", image);
+      // console.log("Image:", image);
       formData.append("image", image);
     }
     // formData.append("sender", sender);
-    console.log("Receiver ID:", receiverId);
-    console.log("Giver ID:", giverId);
+    // console.log("Receiver ID:", receiverId);
+    // console.log("Giver ID:", giverId);
     formData.append("receiverId", receiverId);
     formData.append("giverId", giverId);
+    // formData.append("tags", JSON.stringify(TagCloud.tags));
+    console.log("Selected Tags:", selectedTags);
+    formData.append("tags", JSON.stringify(selectedTags));
 
     try {
       await axios.post("/kudos", formData, {
@@ -67,6 +80,7 @@ const KudosSubmissionPage = () => {
       setImage(null);
       setGiverId("");
       setReceiverId("");
+      setSelectedTags([]);
       window.location.href = "/";
     } catch (error) {
       console.error("Error submitting kudo:", error);
@@ -93,6 +107,8 @@ useEffect(() => {
   return (
     <div>
       <NavBar />
+      {/* Add a heading with background gray titled Submit a Kudo */}
+      <h1 style={{ backgroundColor: "#f0f0f0", padding: "16px", marginBottom: "8px" }}>Submit a Kudo</h1>
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -110,14 +126,15 @@ useEffect(() => {
         placeholder="Select Giver"
         value={query}
         onChange={handleSearch}
-        style={{
-          width: "100%",
-          padding: "8px",
-          borderRadius: "4px",
-          border: "1px solid #ccc",
-        }}
+        required
+        // style={{
+        //   width: "100%",
+        //   padding: "8px",
+        //   borderRadius: "4px",
+        //   border: "1px solid #ccc",
+        // }}
       />
-      <ul
+      {/* <ul
         style={{
           listStyle: "none",
           margin: 0,
@@ -128,7 +145,7 @@ useEffect(() => {
           maxHeight: "150px",
           overflowY: "auto",
         }}
-      >
+      > */}
 
         {suggestions.map((suggestion) => (
           <li
@@ -148,7 +165,7 @@ useEffect(() => {
             {suggestion.name}
           </li>
         ))}
-      </ul>
+      {/* </ul> */}
           {/* <InputLabel id="giver-select-label">Select Giver</InputLabel>
           <Select
             labelId="giver-select-label"
@@ -183,6 +200,9 @@ useEffect(() => {
           Upload Image
           <input type="file" hidden onChange={handleImageUpload} />
         </Button> */}
+
+        {/* Add Tags that the user can choose from and then save them along with the kudo */}
+        <TagCloud selectedTags={selectedTags} toggleTag={toggleTag} />
         <Button
           type="submit"
           variant="contained"

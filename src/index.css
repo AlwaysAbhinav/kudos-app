@@ -12,15 +12,3 @@ code {
     monospace;
 }
 
-.login-page {
-  background-image: url('/assets/background.jpg'); /* Path to your image */
-  background-size: cover; /* Makes the image cover the entire container */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Ensures the image doesn't repeat */
-  opacity: 0.8; /* Sets transparency */
-  width: 100vw; /* Full width */
-  height: 100vh; /* Full height */
-  display: flex; /* Centers child elements */
-  align-items: center;
-  justify-content: center;
-}

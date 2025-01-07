@@ -9,6 +9,8 @@ const ProfilePage = () => {
   const { user } = useAuth();
   const [kudos, setKudos] = useState([]);
   const [kudosGiven, setKudosGiven] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [tag, count] = useState([]);
 // console.log("UserId:", userId);
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -20,6 +22,20 @@ const ProfilePage = () => {
         setProfileData(response.data.user);
         setKudos(response.data.kudos);
         setKudosGiven(response.data.kudosGiven);
+        if (response) {
+          const userData = response.data.user;
+          const userTags = userData.tags || {};
+          console.log('User Tags with Counts:',userTags);
+          //Iterate over the userTags and console.log the tag and count
+          for (const [tag, count] of Object.entries(userTags)) {
+            console.log(`${tag}: ${count}`);
+          }
+            // selectedTags.push(tag);
+          setSelectedTags(userTags);
+        } 
+        // const selectedTagsString = JSON.stringify(response.data.user.tags);
+        
+        console.log("Selected Tags:", response.data.user.tags);
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }
@@ -66,8 +82,9 @@ const ProfilePage = () => {
           <Typography variant="h6" style={{ fontWeight: "bold", color: "#333333" }}>
             Tags
           </Typography>
-          <Box display="flex" flexWrap="wrap" gap={1} mt={2}>
-            {["Team Player", "Hardworking", "Innovative", "Reliable"].map((tag, index) => (
+            <Box display="flex" flexWrap="wrap" gap={1} mt={2}>
+              {/* {selectedTags.map((tag, index) => ( */}
+            {Object.entries(selectedTags || {}).map(([tag, count], index) => (
               <Box
                 key={index}
                 sx={{
@@ -78,9 +95,12 @@ const ProfilePage = () => {
                   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                 }}
               >
-                {tag}
+                {tag}: {count}
               </Box>
             ))}
+          {/* } */}
+
+            {/* ))} */}
           </Box>
         </div>        
         {/* Kudos Received Section */}
