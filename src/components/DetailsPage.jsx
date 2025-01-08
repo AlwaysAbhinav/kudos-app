@@ -9,6 +9,7 @@ const DetailsPage = () => {
   const { userId } = useParams(); 
   // const { user } = useAuth();
   const [kudos, setKudos] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 // console.log("UserId:", userId);
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -19,6 +20,19 @@ const DetailsPage = () => {
         // console.log("Response:", response);
         setProfileData(response.data.user);
         setKudos(response.data.kudos);
+
+        if (response) {
+          const userData = response.data.user;
+          const userTags = userData.tags || {};
+          console.log('User Tags with Counts:',userTags);
+          //Iterate over the userTags and console.log the tag and count
+          for (const [tag, count] of Object.entries(userTags)) {
+            console.log(`${tag}: ${count}`);
+          }
+            // selectedTags.push(tag);
+          setSelectedTags(userTags);
+        }
+
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }
@@ -27,6 +41,7 @@ const DetailsPage = () => {
     fetchProfileData();
   }, [userId]);
 
+  
   // if (!user) return <div>Loading...</div>;
   if (!profileData) return <div>Loading profile...</div>;
 
@@ -65,23 +80,27 @@ const DetailsPage = () => {
           <Typography variant="h6" style={{ fontWeight: "bold", color: "#333333" }}>
             Tags
           </Typography>
-          <Box display="flex" flexWrap="wrap" gap={1} mt={2}>
-          {["Team Player", "Hardworking", "Innovative", "Reliable"].map((tag, index) => (
-            <Box
-            key={index}
-            sx={{
-              backgroundColor: "#ffffff",
-              color: "#333333",
-              padding: "8px 16px",
-              borderRadius: "16px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            }}
-            >
-            {tag}
-            </Box>
-          ))}
+            <Box display="flex" flexWrap="wrap" gap={1} mt={2}>
+              {/* {selectedTags.map((tag, index) => ( */}
+            {Object.entries(selectedTags || {}).map(([tag, count], index) => (
+              <Box
+                key={index}
+                sx={{
+                  backgroundColor: "#ffffff",
+                  color: "#333333",
+                  padding: "8px 16px",
+                  borderRadius: "16px",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                {tag}: {count}
+              </Box>
+            ))}
+          {/* } */}
+
+            {/* ))} */}
           </Box>
-        </div>        
+        </div>         
         {/* Kudos Section */}
         <div style={{ backgroundColor: "#e0e0e0", padding: "16px", marginBottom: "8px" }}>
           <Grid container spacing={2}>

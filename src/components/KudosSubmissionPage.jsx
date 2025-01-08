@@ -66,7 +66,7 @@ const KudosSubmissionPage = () => {
     formData.append("receiverId", receiverId);
     formData.append("giverId", giverId);
     // formData.append("tags", JSON.stringify(TagCloud.tags));
-    console.log("Selected Tags:", selectedTags);
+    // console.log("Selected Tags:", selectedTags);
     formData.append("tags", JSON.stringify(selectedTags));
 
     try {
@@ -93,7 +93,7 @@ useEffect(() => {
     try {
       // console.log("Giver ID", user.uid);
       const response = await axios.get(`/users?userId=${giverId}`);
-      console.log("Users List", response.data);
+      // console.log("Users List", response.data);
       setUsersList(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);

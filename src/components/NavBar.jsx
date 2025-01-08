@@ -61,7 +61,7 @@ return (
             {user && (
                 <>
                     <Button color="inherit" onClick={handleProfileClick}>Profile</Button>
-                    <Button color="inherit" onClick={handleSubmitClick}>Submit Kudo</Button>
+                    <Button color="inherit" onClick={handleSubmitClick}>Give Kudos</Button>
                     <Button color="inherit" onClick={signOutUser}>Logout</Button>
                 </>
             )}
