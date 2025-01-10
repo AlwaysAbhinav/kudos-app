@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Avatar, Typography, Grid, Box, CardMedia, Card, CardContent } from "@mui/material";
+import { Avatar, Typography, Grid, Box, CardMedia, Card, CardContent, Button } from "@mui/material";
 import NavBar from "./NavBar";
 
 const DetailsPage = () => {
@@ -47,6 +47,10 @@ const DetailsPage = () => {
 
   // console.log("User Below:", user);
 
+  const handleGiveKudosClick = (userId) => {
+    window.location.href = `/create?userId=${userId}`;
+  }
+
   return (
     <div>
       <NavBar />
@@ -82,7 +86,8 @@ const DetailsPage = () => {
           </Typography>
             <Box display="flex" flexWrap="wrap" gap={1} mt={2}>
               {/* {selectedTags.map((tag, index) => ( */}
-            {Object.entries(selectedTags || {}).map(([tag, count], index) => (
+            {Object.entries(selectedTags || {}).length > 0 ? (
+            Object.entries(selectedTags || {}).map(([tag, count], index) => (
               <Box
                 key={index}
                 sx={{
@@ -95,16 +100,22 @@ const DetailsPage = () => {
               >
                 {tag}: {count}
               </Box>
-            ))}
-          {/* } */}
-
-            {/* ))} */}
+            ))
+          ): (
+              <Typography variant="body2" style={{ color: "#717171", padding: "16px" }}>
+                No Tags received
+              </Typography>
+            )}
           </Box>
         </div>         
         {/* Kudos Section */}
         <div style={{ backgroundColor: "#e0e0e0", padding: "16px", marginBottom: "8px" }}>
+          <Typography variant="h6" style={{ fontWeight: "bold", color: "#333333" }}>
+            Kudos Received
+          </Typography>
           <Grid container spacing={2}>
-            {kudos.map((kudo) => (
+          {kudos && kudos.length > 0 ? (
+            kudos.map((kudo) => (
               <Grid item xs={12} sm={6} md={4} key={kudo.id}>
                 <Card>
                   <CardContent>
@@ -132,7 +143,21 @@ const DetailsPage = () => {
                   </Box>
                 </Card>
               </Grid>
-            ))}
+            ))) : (
+                <Typography variant="body2" style={{ color: "#717171", padding: "16px" }}>
+                  No Kudos Received
+                </Typography>
+              )}
+            <Box display="flex" justifyContent="flex-end" width="100%" mt={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleGiveKudosClick(userId)}
+                style={{ backgroundColor: "#e60023", color: "#ffffff"}}
+              >
+                Give Kudos
+              </Button>
+            </Box>              
           </Grid>
         </div>
       </div>

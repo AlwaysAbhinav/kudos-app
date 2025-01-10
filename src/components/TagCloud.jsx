@@ -4,17 +4,77 @@ import "./TagCloud.css"; // For styling
 
 function TagCloud({ selectedTags, toggleTag }) {
   const allTags = [
-    "React",
-    "JavaScript",
-    "Node.js",
-    "CSS",
-    "HTML",
-    "MongoDB",
-    "Firebase",
-    "Python",
-    "Machine Learning",
-    "AI",
-  ]; // Example tags
+    // Support & Care
+    "CareCrusader",
+    "SupportSuperstar",
+    "HelpingHandHero",
+    "CompassionKing",
+    "HeartOfGold",
+    "SoulSaver",
+    "GuardianAngel",
+    "RockSolid",
+    // Hardwork and Dedication
+    "EffortExtraordinaire",
+    "GritGuru",
+    "HustleHero",
+    "CommitmentLegend",
+    "WorkHorse",
+    "PerseverancePro",
+    "GoalGetter",
+    "TenacityChampion",
+    // Problem-Solving & Strategy
+    "SolutionSage",
+    "TacticianExtraordinaire",
+    "LogicGenius",
+    "StrategyArchitect",
+    "FixItPro",
+    "CrisisTamer",
+    // Humour & Fun
+    "MemeKing",
+    "PunMaster",
+    "JokeMachine",
+    "LaughGenerator",
+    "FunVibesOnly",
+    "MoodBooster",
+    "GiggleGenius",
+    "WitWizard",
+    // Leadership & Motivation
+    "InspirationEngine",
+    "TeamHero",
+    "LeadershipWizard",
+    "MotivationNinja",
+    "CaptainCool",
+    "ChangeMaker",
+    "GoalCrusher",
+    "FearlessLeader",
+    // Creativity & Innovation
+    "IdeaMachine",
+    "DesignMaverick",
+    "InnoGenius",
+    "PixelPerfectionist",
+    "ArtVanguard",
+    "CreativityUnlocked",
+    "VisionCrafter",
+    "DreamWeaver",
+    // Social & Emotional
+    "SocialGlue",
+    "EmpathyChampion",
+    "PeopleMagnet",
+    "VibeCurator",
+    "ConnectorExtraordinaire",
+    "KindnessCatalyst",
+    "HugDealer",
+    "OptimismArchitect",
+    // Tech & Skills
+    "CodeNinja",
+    "DebugMaster",
+    "TechWhiz",
+    "UXWarrior",
+    "DataGuru",
+    "AppSorcerer",
+    "DevOpsDynamo",
+    "CloudConqueror",
+  ];
 
 //   const [selectedTags, setSelectedTags] = useState([]);
 

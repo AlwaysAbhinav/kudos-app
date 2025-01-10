@@ -36,12 +36,22 @@ const HomePage = ({ user }) => {
 
   return (
     <div>
-      <NavBar user={user} />
-      <Grid container spacing={3} justifyContent="center">
+      <NavBar />
+      <Grid container spacing={3} justifyContent="center" sx={{ marginTop: 2 }}>
         {kudosData.map((userData) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={userData.receiverId}>
             <Card
-              sx={{ borderRadius: 2, boxShadow: 3, overflow: "hidden", cursor: "pointer" }}
+              sx={{
+                borderRadius: 2,
+                boxShadow: 3,
+                overflow: "hidden",
+                cursor: "pointer",
+                transition: "transform 0.3s, box-shadow 0.3s",
+                "&:hover": {
+                  transform: "scale(1.05)",
+                  boxShadow: 6,
+                },
+              }}
               onClick={() => handleCardClick(userData.receiverId)}
             >
               <CardMedia
